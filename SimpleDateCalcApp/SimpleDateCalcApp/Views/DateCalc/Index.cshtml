@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Date Calculator</h2>
+<p class="lead">This app calculates how many days apart two given dates are.<br />Click on <em>Firt Date</em> and <em>Second Date</em> to select two dates and then click <em>Claculate Difference</em> to see the results.</p>
+
+</p>@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("dateA", "First Date:")
+                @Html.TextBox("dateA", null, new { @class = "form-control date-control", @style="cursor: text"})
+            </div>
+        </div>
+        <div class="col-md-6">
+            @Html.Label("dateB", "Second Date:")
+            @Html.TextBox("dateB", null, new { @class = "form-control date-control", @style="cursor: text" })
+        </div>
+    </div>
+    if (ViewBag.DateDiff != null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <h3>The two dates you've chosen are <b>@ViewBag.DateDiff</b> days apart.</h3>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-1 text-center">
+            <input type="submit" value="Calculate Difference" class="btn btn-lg btn-warning" />
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        // Initialze date input fields with pick-a-date widget.
+        $('.date-control').pickadate({format:'yyyy/mm/dd'});
+    </script>
+}
