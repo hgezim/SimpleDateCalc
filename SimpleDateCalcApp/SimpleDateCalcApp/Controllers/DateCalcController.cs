@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using SimpleDateCalcApp.Shared;
+
 namespace SimpleDateCalcApp.Controllers
 {
     public class DateCalcController : Controller
@@ -18,12 +20,16 @@ namespace SimpleDateCalcApp.Controllers
         [HttpPost]
         public ActionResult Index(string dateA, string dateB)
         {
+            if (String.IsNullOrEmpty(dateA) || String.IsNullOrEmpty(dateB))
+            {
+                ViewBag.Error = "Please select 2 dates.";
+                return View();
+            }
 
-            DateTime dA = DateTime.Parse(dateA);
-            DateTime dB = DateTime.Parse(dateB);
+            SimpleDate dA = new SimpleDate(dateA);
+            SimpleDate dB = new SimpleDate(dateB);
 
-            // We only care about the difference and not if it's possitive or negative.
-            int dateDiff = Math.Abs((dA - dB).Days);
+            int dateDiff = dA - dB;
             ViewBag.DateDiff = String.Format("{0:0}", dateDiff);
 
             return View();
